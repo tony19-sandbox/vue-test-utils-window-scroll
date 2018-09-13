@@ -11,11 +11,11 @@ export default {
     window.addEventListener('scroll', this.topBResize);
   },
   methods: {
-    topBResize() {
+    topBResize(e) {
       var header = document.getElementById('topB');
       if (!header) return;
       var pos1 = header.offsetTop;
-      var pageYOffset = window.pageYOffset;
+      var pageYOffset = !Number.isNaN(e.detail) ? e.detail : window.pageYOffset;
       if (pageYOffset > pos1) {
         header.classList.add('sticky');
       } else {

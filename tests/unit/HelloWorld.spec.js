@@ -4,10 +4,6 @@ import HelloWorld from '@/components/HelloWorld.vue';
 
 describe('HelloWorld.vue', () => {
 
-  afterEach(() => {
-    window.pageYOffset = 0;
-  });
-
   it('top banner is sticky when scrolled past top', async () => {
     const localVue = createLocalVue();
     const wrapper = shallowMount(HelloWorld, {
@@ -15,9 +11,8 @@ describe('HelloWorld.vue', () => {
       attachToDocument: true,
     });
     const dBanner = wrapper.find('#topB')
-    window.pageYOffset = 2000;
 
-    wrapper.vm.topBResize();
+    window.dispatchEvent(new CustomEvent('scroll', { detail: 2000 }));
     expect(dBanner.classes()).to.contain('sticky')
   });
 
@@ -28,9 +23,8 @@ describe('HelloWorld.vue', () => {
       attachToDocument: true,
     });
     const dBanner = wrapper.find('#topB')
-    window.pageYOffset = 0;
 
-    wrapper.vm.topBResize();
+    window.dispatchEvent(new CustomEvent('scroll', { detail: 0 }));
     expect(dBanner.classes()).to.not.contain('sticky')
   });
 });
